@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<section class="section container">
+  <h1>Clinic admin dashboard</h1>
+  <p>Manage bookings, reviews, and clinic content from the admin area.</p>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Appointments</h3>
+      <p>{{ appointment_count }} total bookings</p>
+      <a class="btn btn-secondary" href="/admin/clinic/appointment/">Open appointments</a>
+    </div>
+    <div class="card">
+      <h3>Testimonials</h3>
+      <p>{{ testimonial_count }} reviews recorded</p>
+      <a class="btn btn-secondary" href="/admin/clinic/testimonial/">Manage reviews</a>
+    </div>
+    <div class="card">
+      <h3>Clinic profile</h3>
+      <p>Update doctor, contact, and service details</p>
+      <a class="btn btn-secondary" href="/admin/clinic/clinicprofile/">Edit profile</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

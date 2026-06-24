@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<section class="section container">
+  <h1>Your appointments</h1>
+  <ul class="stack-list">
+    {% for appointment in appointments %}
+    <li class="card">
+      <strong>{{ appointment.booking_date }} {{ appointment.booking_time }}</strong>
+      <p>Status: {{ appointment.status }}</p>
+      {% if appointment.status != 'Cancelled' %}
+      <form method="post" action="{% url 'cancel_appointment' appointment.pk %}">
+        {% csrf_token %}
+        <button class="btn btn-secondary" type="submit">Cancel</button>
+      </form>
+      {% endif %}
+    </li>
+    {% empty %}
+    <li>No appointments.</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

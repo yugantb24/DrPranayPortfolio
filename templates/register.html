@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<section class="section container auth-card">
+  <h1>Create an account</h1>
+  <form method="post" class="form-card">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Register</button>
+  </form>
+</section>
+{% endblock %}

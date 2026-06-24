@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Physiotherapy Clinic{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="{% url 'home' %}">PhysioCare</a>
+        <nav class="nav-links">
+          <a href="{% url 'about' %}">About</a>
+          <a href="{% url 'services' %}">Services</a>
+          <a href="{% url 'booking' %}">Book</a>
+          <a href="{% url 'testimonials' %}">Testimonials</a>
+          <a href="{% url 'gallery' %}">Gallery</a>
+          <a href="{% url 'contact' %}">Contact</a>
+          <a href="{% url 'faq' %}">FAQ</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      {% if messages %}
+      <div class="container">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h3>PhysioCare</h3>
+          <p>Recovery-focused physiotherapy for movement, strength, and confidence.</p>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <p>{{ profile.phone|default:'+' }}<br />{{ profile.email|default:'contact@physiocare.com' }}</p>
+        </div>
+        <div>
+          <h3>Visit</h3>
+          <p>{{ profile.address|default:'123 Wellness Avenue' }}</p>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

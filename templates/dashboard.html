@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="section container">
+  <h1>Welcome, {{ user.username }}</h1>
+  <p>Your appointments and clinic updates appear here.</p>
+  <div class="card-grid dashboard-grid">
+    <div class="card">
+      <h3>Pending requests</h3>
+      <p>{{ pending_count }}</p>
+    </div>
+    <div class="card">
+      <h3>Upcoming visits</h3>
+      <ul>
+        {% for appointment in appointments %}
+        <li>{{ appointment.booking_date }} at {{ appointment.booking_time }} — {{ appointment.status }}</li>
+        {% empty %}
+        <li>No appointments yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

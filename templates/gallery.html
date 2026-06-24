@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading">
+    <p class="eyebrow">Gallery</p>
+    <h1>Explore our modern clinic and recovery spaces</h1>
+  </div>
+  <div class="card-grid">
+    {% for image in gallery_images %}
+    <article class="card">
+      <img class="gallery-image" src="{{ image.image.url }}" alt="{{ image.title }}" />
+      <h3>{{ image.title }}</h3>
+      <p>{{ image.description }}</p>
+    </article>
+    {% empty %}
+    <p>Gallery images will appear here soon.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

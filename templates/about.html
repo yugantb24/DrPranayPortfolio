@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}About PhysioCare{% endblock %}
+{% block content %}
+<section class="section container about-grid">
+  <div>
+    <p class="eyebrow">About the clinic</p>
+    <h1>{{ profile.name|default:'Dr. Pranay' }}</h1>
+    <p>{{ profile.bio }}</p>
+    <p><strong>Qualifications:</strong> {{ profile.qualifications }}</p>
+    <p><strong>Specializations:</strong> {{ profile.specializations }}</p>
+    <p><strong>Experience:</strong> {{ profile.experience_years }} years</p>
+  </div>
+  <div class="card">
+    {% if profile.profile_image %}
+    <img class="profile-image" src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" />
+    {% else %}
+    <div class="placeholder">Profile image coming soon</div>
+    {% endif %}
+    <h3>{{ profile.title }}</h3>
+    <p>{{ profile.phone }}</p>
+    <p>{{ profile.email }}</p>
+  </div>
+</section>
+{% endblock %}

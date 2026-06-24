@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}PhysioCare | Expert Physiotherapy Care{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">Modern physiotherapy clinic</p>
+      <h1>Move better, heal faster, and live pain-free.</h1>
+      <p>Get expert treatment plans, guided rehabilitation, and a calm clinic experience from Dr. Pranay and the PhysioCare team.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'booking' %}">Book an Appointment</a>
+        <a class="btn btn-secondary" href="{% url 'services' %}">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Why patients choose us</h3>
+      <ul>
+        <li>Personalized recovery plans</li>
+        <li>Evidence-based manual therapy</li>
+        <li>Flexible online booking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="section-heading">
+    <p class="eyebrow">Featured services</p>
+    <h2>Care tailored to your recovery goals</h2>
+  </div>
+  <div class="card-grid">
+    {% for service in services %}
+    <article class="card">
+      <i class="{{ service.icon }}"></i>
+      <h3>{{ service.name }}</h3>
+      <p>{{ service.description }}</p>
+    </article>
+    {% empty %}
+    <p>No featured services yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Patient stories</p>
+      <h2>Trusted by people recovering from pain and injury</h2>
+    </div>
+    <div class="card-grid">
+      {% for testimonial in testimonials %}
+      <article class="card">
+        <p>“{{ testimonial.content }}”</p>
+        <strong>{{ testimonial.patient_name }}</strong>
+        <div class="stars">{% for i in "x"|ljust:testimonial.rating %}★{% endfor %}</div>
+      </article>
+      {% empty %}
+      <p>Be the first to share your experience.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

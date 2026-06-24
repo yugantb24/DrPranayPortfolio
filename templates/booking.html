@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Book an Appointment{% endblock %}
+{% block content %}
+<section class="section container booking-grid">
+  <div>
+    <p class="eyebrow">Appointment booking</p>
+    <h1>Reserve your physiotherapy consultation</h1>
+    <p>Choose a preferred date and time. Slots are confirmed by the clinic team.</p>
+    <form method="post" class="form-card">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Book Now</button>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Clinic details</h3>
+    <p><strong>Consultation fee:</strong> ₹{{ profile.consultation_fee }}</p>
+    <p><strong>Timings:</strong> {{ profile.clinic_timings }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    <h3>Upcoming appointments</h3>
+    <ul>
+      {% for appointment in appointments %}
+      <li>{{ appointment.booking_date }} at {{ appointment.booking_time }} — {{ appointment.status }}</li>
+      {% empty %}
+      <li>No bookings yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

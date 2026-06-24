@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+<section class="section container contact-grid">
+  <div>
+    <p class="eyebrow">Contact</p>
+    <h1>We are here to help</h1>
+    <p><strong>Phone:</strong> {{ profile.phone }}</p>
+    <p><strong>Email:</strong> {{ profile.email }}</p>
+    <p><strong>Address:</strong> {{ profile.address }}</p>
+    {% if profile.google_maps_link %}
+    <a class="btn btn-secondary" href="{{ profile.google_maps_link }}" target="_blank">View on Google Maps</a>
+    {% endif %}
+  </div>
+  <div>
+    <form method="post" class="form-card">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

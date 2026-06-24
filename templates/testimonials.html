@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Testimonials{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading">
+    <p class="eyebrow">Reviews</p>
+    <h1>What patients say about our care</h1>
+  </div>
+  <form method="post" class="form-card">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Submit Review</button>
+  </form>
+  <div class="card-grid">
+    {% for testimonial in testimonials %}
+    <article class="card">
+      <p>“{{ testimonial.content }}”</p>
+      <strong>{{ testimonial.patient_name }}</strong>
+      <div class="stars">{% for i in "x"|ljust:testimonial.rating %}★{% endfor %}</div>
+    </article>
+    {% empty %}
+    <p>No approved testimonials yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}FAQ{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading">
+    <p class="eyebrow">FAQ</p>
+    <h1>Frequently asked questions</h1>
+  </div>
+  <div class="faq-list">
+    {% for item in faqs %}
+    <details class="faq-item">
+      <summary>{{ item.question }}</summary>
+      <p>{{ item.answer }}</p>
+    </details>
+    {% empty %}
+    <p>Questions will appear here soon.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

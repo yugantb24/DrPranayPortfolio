@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Our Services{% endblock %}
+{% block content %}
+<section class="section container">
+  <div class="section-heading">
+    <p class="eyebrow">Services</p>
+    <h1>Comprehensive physiotherapy care for every stage of recovery</h1>
+  </div>
+  <div class="card-grid">
+    {% for service in services %}
+    <article class="card">
+      <i class="{{ service.icon }}"></i>
+      <h3>{{ service.name }}</h3>
+      <p>{{ service.description }}</p>
+    </article>
+    {% empty %}
+    <p>No services yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
