@@ -5,4 +5,3 @@ psycopg2-binary==2.9.10
 gunicorn==26.0.0
 whitenoise==6.5.0
 cloudinary==1.36.0
-django-cloudinary-storage==0.3.0

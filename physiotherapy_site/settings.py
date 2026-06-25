@@ -14,8 +14,6 @@ import os
 from pathlib import Path
 
 import dj_database_url
-import cloudinary
-import cloudinary.storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,8 +49,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "cloudinary_storage",
-    "cloudinary",
     "clinic",
 ]
 
@@ -150,24 +146,9 @@ LOGIN_REDIRECT_URL = "/dashboard/"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Media files configuration with Cloudinary
+# Media files configuration
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Configure Cloudinary if credentials are available (production on Render)
-CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME")
-CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY")
-CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET")
-
-if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
-    # Production: Use Cloudinary
-    cloudinary.config(
-        cloud_name=CLOUDINARY_CLOUD_NAME,
-        api_key=CLOUDINARY_API_KEY,
-        api_secret=CLOUDINARY_API_SECRET,
-    )
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-    MEDIA_URL = "https://res.cloudinary.com/{}/image/upload/".format(CLOUDINARY_CLOUD_NAME)
-else:
-    # Development: Use local filesystem
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+# Use custom storage backend that handles both local and Cloudinary
+DEFAULT_FILE_STORAGE = "clinic.storage.CloudinaryMediaStorage"
