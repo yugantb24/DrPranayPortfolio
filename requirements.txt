@@ -1,2 +1,5 @@
 Django==6.0.6
 Pillow
+dj-database-url==1.0.0
+gunicorn==22.1.0
+whitenoise==6.5.0

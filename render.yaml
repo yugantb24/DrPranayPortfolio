@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: dr-pranay-portfolio
+    env: python
+    branch: main
+    plan: starter
+    region: oregon
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn physiotherapy_site.wsgi --log-file -
+    releaseCommand: python manage.py migrate
+    envVars:
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "localhost 127.0.0.1"
+      - key: RENDER_EXTERNAL_HOSTNAME
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SECURE_SSL_REDIRECT
+        value: "True"

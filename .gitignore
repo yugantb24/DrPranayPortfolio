@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+db.sqlite3
+/staticfiles/
+/media/
+*.log
+
+# Environments
+env/
+venv/
+.venv/
+
+# VS Code
+.vscode/
+
+# Render
+*.render.yaml
