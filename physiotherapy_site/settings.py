@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary_storage",
+    "cloudinary",
     "clinic",
 ]
 
@@ -146,26 +148,20 @@ LOGIN_REDIRECT_URL = "/dashboard/"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Media files configuration
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# Media files configuration with Cloudinary
+import cloudinary
 
-# For production on Render, you have two options:
-# OPTION 1: Use Cloudinary (recommended - free up to 25GB)
-# Add these environment variables to Render:
-# - CLOUDINARY_CLOUD_NAME
-# - CLOUDINARY_API_KEY  
-# - CLOUDINARY_API_SECRET
-# Then uncomment the code below:
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+)
 
-# import cloudinary
-# cloudinary.config(
-#     cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-#     api_key=os.environ.get("CLOUDINARY_API_KEY"),
-#     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-# )
-# if os.environ.get("CLOUDINARY_CLOUD_NAME"):
-#     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-# OPTION 2: Use local storage (files persist in current session only)
-# DEFAULT_FILE_STORAGE = "clinic.storage.MediaStorage"
+# Use Cloudinary storage if credentials are available (production)
+if os.environ.get("CLOUDINARY_CLOUD_NAME"):
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    MEDIA_URL = "/media/"
+else:
+    # Local storage for development (files stored in media/ folder)
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
