@@ -25,7 +25,6 @@ urlpatterns = [
     path("", include("clinic.urls")),
 ]
 
-# Serve media files in all environments
-# Note: In production (Render), files must be stored in persistent storage (Cloudinary, S3, etc.)
-if settings.DEBUG or True:  # Always serve media URLs (URLs will work when storage is configured)
+# Serve media files only in development
+if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

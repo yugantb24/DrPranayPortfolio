@@ -146,9 +146,5 @@ LOGIN_REDIRECT_URL = "/dashboard/"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Media files configuration
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
-
 # Use custom storage backend that handles both local and Cloudinary
 DEFAULT_FILE_STORAGE = "clinic.storage.CloudinaryMediaStorage"

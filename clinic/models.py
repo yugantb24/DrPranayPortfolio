@@ -82,7 +82,7 @@ class Appointment(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.patient} - {self.booking_date} {self.booking_time}"
+        return f"{self.patient_name} - {self.booking_date} {self.booking_time}"
 
 
 class ContactMessage(models.Model):

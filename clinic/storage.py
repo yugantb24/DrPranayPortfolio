@@ -1,9 +1,9 @@
 import os
 import cloudinary
 import cloudinary.uploader
+import cloudinary.utils
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-from io import BytesIO
 
 
 class CloudinaryMediaStorage(FileSystemStorage):
@@ -39,22 +39,29 @@ class CloudinaryMediaStorage(FileSystemStorage):
         """Save file to Cloudinary if available, otherwise save locally"""
         if self.use_cloudinary:
             try:
+                # Reset file pointer if it's been read
+                if hasattr(content, 'seek'):
+                    content.seek(0)
+                
                 # Read file content
                 if hasattr(content, 'read'):
                     file_content = content.read()
                 else:
                     file_content = content
                 
+                # Get file name without extension for public_id
+                name_without_ext = os.path.splitext(os.path.basename(name))[0]
+                
                 # Upload to Cloudinary
                 result = cloudinary.uploader.upload(
                     file_content,
                     folder="drpranay-portfolio",
                     resource_type="auto",
-                    public_id=os.path.splitext(name)[0],
+                    public_id=name_without_ext,
                 )
                 
-                # Store the Cloudinary URL
-                return result.get('public_id', name)
+                # Store the full Cloudinary public ID with folder
+                return f"drpranay-portfolio/{result.get('public_id', name_without_ext)}"
             except Exception as e:
                 print(f"Cloudinary upload error: {e}")
                 # Fall back to local storage
@@ -67,9 +74,18 @@ class CloudinaryMediaStorage(FileSystemStorage):
         """Return the URL for accessing the file"""
         if self.use_cloudinary:
             try:
-                # Return Cloudinary CDN URL
-                return cloudinary.utils.cloudinary_url(name)[0]
-            except Exception:
+                # Generate Cloudinary URL from public_id
+                if name.startswith("drpranay-portfolio/"):
+                    # Already has folder prefix
+                    url = cloudinary.utils.cloudinary_url(name)[0]
+                else:
+                    # Add folder prefix if missing
+                    full_name = f"drpranay-portfolio/{name}" if not name.startswith("/") else name.lstrip("/")
+                    url = cloudinary.utils.cloudinary_url(full_name)[0]
+                
+                return url if url else super().url(name)
+            except Exception as e:
+                print(f"Cloudinary URL error: {e}")
                 # Fall back to local URL
                 return super().url(name)
         else:
